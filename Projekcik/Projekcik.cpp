@@ -15,9 +15,16 @@ int main()
 {
 	double tablica[2] = { 13,13 };
 	double macierz[2][2];
-	double N = 2;
-	int i= 0;
+	double** hilbert;
+	
+	int N = 2;
+	int i = 0;
 	int j = 0;
+	hilbert = (double**)(malloc(N * sizeof(double*)));
+	for (i = 0; i < N; i++)
+	{
+		hilbert[i] = (double*)(malloc(N * sizeof(double)));
+	}
 	for (i = 0; i < N; i++)
 	{
 		for (j = 0; j < N; j++)
@@ -26,8 +33,10 @@ int main()
 
 		}
 		printf("\n");
-	}
-	displayMatrix(2, macierz[0]);
+	}	
+	HilbertMatrix(N, hilbert);
+	displayMatrix(N, hilbert);
+	plotVec(N, tablica);
 
 }
 
@@ -41,7 +50,15 @@ void HilbertMatrix(int N, double** H)
 	}
 }
 
-void displayMatrix(int N, double **H)
+void plotVec(int N, double* v)
+{
+	for (int i = 0; i < N; i++)
+	{
+		printf("%lf", v[i]);
+	}
+}
+
+void displayMatrix(int N, double(**H) )
 {
 	int i = 0, j = 0;
 	for (i = 0; i < N; i++)
