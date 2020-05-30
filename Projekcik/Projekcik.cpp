@@ -13,7 +13,21 @@ void plotVec(int N, double* v);
 int main()
 
 {
+	double tablica[2] = { 13,13 };
+	double macierz[2][2];
+	double N = 2;
+	int i= 0;
+	int j = 0;
+	for (i = 0; i < N; i++)
+	{
+		for (j = 0; j < N; j++)
+		{
+			macierz[i][j] = i;
 
+		}
+		printf("\n");
+	}
+	displayMatrix(2, macierz[0]);
 
 }
 
@@ -27,7 +41,7 @@ void HilbertMatrix(int N, double** H)
 	}
 }
 
-void displayMatrix(int N, double** H)
+void displayMatrix(int N, double **H)
 {
 	int i = 0, j = 0;
 	for (i = 0; i < N; i++)
