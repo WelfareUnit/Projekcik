@@ -1,73 +1,90 @@
 ﻿#include <iostream>
 #include <math.h>
 #include <stdlib.h>
+#define N 50
 #include "gauss.h"					//załączona biblioteka z funkcją RK
 #pragma warning(disable:4996)		//umożlliwienie uzywania scanf w Visual 2019
-
-void HilbertMatrix(int N, double** H);
-void displayMatrix(int N, double** H);
-void computeVec(int N, double** H, double* b);
-void plotVec(int N, double* v);
+void HilbertMatrix(int n, double H[][N]);
+void displayMatrix(int n, double H[][N]);
+void computeVec(int n, double A[][N], double v[]);
+void plotVec(int n, double v[]);
 
 
 int main()
 
 {
-	double tablica[2] = { 13,13 };
+
+	double Bst[2];
+	double Xst[2];
 	double macierz[2][2];
 	double** hilbert;
-	
-	int N = 2;
+
+	int n = 2;
 	int i = 0;
 	int j = 0;
-	hilbert = (double**)(malloc(N * sizeof(double*)));
-	for (i = 0; i < N; i++)
+	hilbert = (double**)(malloc(n * sizeof(double*)));
+	for (i = 0; i < n; i++)
 	{
-		hilbert[i] = (double*)(malloc(N * sizeof(double)));
+		hilbert[i] = (double*)(malloc(n * sizeof(double)));
 	}
-	for (i = 0; i < N; i++)
+	for (i = 0; i < n; i++)
 	{
-		for (j = 0; j < N; j++)
+		for (j = 0; j < n; j++)
 		{
-			macierz[i][j] = i;
+			macierz[i][j] = 1. / (1. + i + j);
+
 
 		}
 		printf("\n");
-	}	
-	HilbertMatrix(N, hilbert);
-	displayMatrix(N, hilbert);
-	plotVec(N, tablica);
+	}
+
+
+	//HilbertMatrix(n, hilbert);
+	gauss(n, hilbert, Bst, Xst);
+
 
 }
 
-void HilbertMatrix(int N, double** H)
+void HilbertMatrix(int n, double H[][N])
 {
-	for (int i= 0; i < N; i++)
+	for (int i = 0; i < n; i++)
 	{
-		for (int j = 0; j < N; j++)
+		for (int j = 0; j < n; j++)
 			H[i][j] = 1. / (1. + i + j);
 
 	}
 }
 
-void plotVec(int N, double* v)
+void plotVec(int n, double v[])
 {
-	for (int i = 0; i < N; i++)
+	for (int i = 0; i < n; i++)
 	{
 		printf("%lf", v[i]);
 	}
 }
 
-void displayMatrix(int N, double(**H) )
+void displayMatrix(int n, double H[][N])
 {
 	int i = 0, j = 0;
-	for (i = 0; i < N; i++)
+	for (i = 0; i < n; i++)
 	{
-		for (j = 0; j < N; j++)
+		for (j = 0; j < n; j++)
 		{
 			printf("%lf\t", H[i][j]);
 
 		}
 		printf("\n");
+	}
+}
+
+void computeVec(int n, double A[][N], double v[])
+{
+	for (int i = 0; i < n; i++)
+	{
+		v[i] = 0;
+		for (int j = 0; j < n; j++)
+		{
+			v[i] += A[i][j];
+		}
 	}
 }
