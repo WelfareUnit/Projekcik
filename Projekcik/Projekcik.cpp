@@ -8,7 +8,10 @@ void HilbertMatrix(int n, double H[][N]);
 void displayMatrix(int n, double H[][N]);
 void computeVec(int n, double A[][N], double v[]);
 void plotVec(int n, double v[]);
-
+void space()
+{
+	printf("\n");
+}
 
 int main()
 
@@ -19,7 +22,13 @@ int main()
 	double macierz[N][N];
 	double** hilbert;
 
-	int n = 2;
+	int n = 0;
+	printf("Podaj ilosc rownan<=50\n");
+	do
+	{
+		scanf("%d" ,& n);
+		space();
+	} while (n > 50 || n <= 0);
 	int i = 0;
 	int j = 0;
 	hilbert = (double**)(malloc(N * sizeof(double*)));
@@ -36,14 +45,17 @@ int main()
 
 
 		}
-		printf("\n");
+		space();
 	}
 
-
-	HilbertMatrix(n, hilbert);
+	
+	HilbertMatrix(n, macierz);
+	displayMatrix(n, macierz);
+	computeVec(n, macierz, Bst);
 	gauss(n, macierz, Bst, Xst);
+	plotVec(n, Xst);
 
-
+	return 0;
 }
 
 void HilbertMatrix(int n, double H[][N])
@@ -60,8 +72,9 @@ void plotVec(int n, double v[])
 {
 	for (int i = 0; i < n; i++)
 	{
-		printf("%lf", v[i]);
+		printf("%lg\t", v[i]);
 	}
+	printf("\n");
 }
 
 void displayMatrix(int n, double H[][N])
@@ -76,6 +89,7 @@ void displayMatrix(int n, double H[][N])
 		}
 		printf("\n");
 	}
+	printf("\n");
 }
 
 void computeVec(int n, double A[][N], double v[])
