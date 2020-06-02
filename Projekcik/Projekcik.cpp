@@ -14,19 +14,20 @@ int main()
 
 {
 
-	double Bst[2];
-	double Xst[2];
-	double macierz[2][2];
+	double Bst[N];
+	double Xst[N];
+	double macierz[N][N];
 	double** hilbert;
 
 	int n = 2;
 	int i = 0;
 	int j = 0;
-	hilbert = (double**)(malloc(n * sizeof(double*)));
+	hilbert = (double**)(malloc(N * sizeof(double*)));
 	for (i = 0; i < n; i++)
 	{
-		hilbert[i] = (double*)(malloc(n * sizeof(double)));
+		hilbert[i] = (double*)(malloc(N * sizeof(double)));
 	}
+
 	for (i = 0; i < n; i++)
 	{
 		for (j = 0; j < n; j++)
@@ -39,8 +40,8 @@ int main()
 	}
 
 
-	//HilbertMatrix(n, hilbert);
-	gauss(n, hilbert, Bst, Xst);
+	HilbertMatrix(n, hilbert);
+	gauss(n, macierz, Bst, Xst);
 
 
 }
