@@ -217,8 +217,6 @@ int main()
 
 		case 1:
 		
-
-			printf("poszlo 1\n");
 			/*HilbertMatrix(n, macierz);						//dla alokacji statycznej
 			displayMatrix(n, macierz);
 			computeVec(n, macierz, bst);
@@ -246,8 +244,7 @@ int main()
 			break;
 
 		case 2:
-		
-			printf("poszlo 2\n");
+
 			for (i = 0; i < nmax; i++)
 			{
 				fscanf(f3, "%lf", &bdyn[i]);
@@ -256,7 +253,13 @@ int main()
 					fscanf(f2, "%lf", &macierzdyn[i][j]);
 				}
 			}
+			plotVec(nmax, bdyn);
 			displayMatrix(nmax, macierzdyn);
+			trojk(nmax, macierzdyn, trojkatna);
+			displayMatrix(nmax, trojkatna);
+			gauss(nmax, macierzdyn, bdyn, xdyn);
+			plotVec(nmax, xdyn);
+
 			break;
 		
 	}
