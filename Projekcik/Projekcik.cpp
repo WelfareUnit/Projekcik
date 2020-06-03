@@ -160,7 +160,7 @@ int main()
 		displayMatrix(n, hilbert);
 		plotVec(n, xdyn);
 		blad = maxAbsError(n, xdyn);
-		fprintf(f1, "%d,%lf\n",n, blad);
+		fprintf(f1, "%d\t%lf\n",n, blad);
 		printf("%d\t%lg\n", n, blad);
 		n++;
 	}
