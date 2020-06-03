@@ -1,4 +1,5 @@
-﻿#include <iostream>
+﻿
+#include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
 #define N 50			
@@ -160,7 +161,7 @@ int main()
 		plotVec(n, xdyn);
 		blad = maxAbsError(n, xdyn);
 		fprintf(f1, "%d,%lf\n",n, blad);
-		printf("%d,%lg\n", n, blad);
+		printf("%d\t%lg\n", n, blad);
 		n++;
 	}
 	for (i = 0; i < nmax; i++)
