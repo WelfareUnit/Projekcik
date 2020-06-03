@@ -124,7 +124,7 @@ int main()
 
 	int i = 0;
 	int j = 0;
-	FILE* f1 = fopen("wyniki.txt", "w");
+	FILE* f1 = fopen("blad.txt", "w");
 	double blad = 0;
 	/*double bst[N];
 	double xst[N];

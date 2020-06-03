@@ -1,4 +1,4 @@
-
+#define N 50
 #include "gauss.h"
 void gauss(int n, double a[][N], double b[], double x[])
 {
