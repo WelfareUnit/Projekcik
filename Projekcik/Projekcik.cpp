@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#define N 50			
+#define N 50
 #pragma warning(disable:4996)		//umożlliwienie uzywania scanf w Visual 2019
 void gauss(int n,/* double a[][N],*/double**a, double *b, double *x)			//funkcja z biblioteki gauss, przeklejona tutaj w celu modyfikacji dla alok. dyn.
 {
@@ -39,6 +39,42 @@ void gauss(int n,/* double a[][N],*/double**a, double *b, double *x)			//funkcja
 
 		x[i] = (b[i] - s) / a[i][i];
 	}
+}
+void trojk(int n,/* double a[][N],*/double** a,/* double t[][N],*/double** t) //funkcja obliczająca macierz trójkątną górną z danej macierz
+{
+	int i, j, k;
+	double wsp=0;
+	for (i = 0; i < n; i++) //przepisanie elementow macierzy na macierz, na której zapisana będzie trójkątna
+	{
+		for (j = 0; j < n; j++)
+		{
+			t[i][j] = a[i][j];
+		}
+
+	}
+	for (i = 0; i < n - 1; i++)
+	{
+		for (k = i + 1; k < n; k++)
+		{
+			wsp = t[k][i] / t[i][i];
+			// odejmowanie elementów wiersza "i" od wiersza "k"
+			for (j = i; j < n; j++)
+			{
+				t[k][j] -= t[i][j] * wsp;
+				
+			}
+		}
+	}
+}
+double wyznaczniktrojk(int n,/* double a[][N],*/double** a)
+{
+	double iloczyn = 0;
+	int i = 0;
+	for (i = 0; i < n; i++)
+	{
+		iloczyn *= a[i][i];
+	}
+	return iloczyn;
 }
 void HilbertMatrix(int n/*, double H[][N]*/, double** H)		//zakomentowane części są dla tablic alokowanych statycznie, odkomentowane dla dynamicznie
 {
@@ -113,34 +149,81 @@ void endl()
 
 int main()
 {
+	int ktore;
 	int n = 1;
+	int nf1;
+	int nf2;
 	int nmax = 0;
-	printf("Podaj max ilosc rownan<=50\n");
-	do
+	int wyznacznik = 0;
+	FILE* f1 = fopen("blad.txt", "w");
+	FILE* f2 = fopen("macierz.txt", "r");
+	FILE* f3 = fopen("wektor.txt", "r");
+	do 
 	{
-		scanf("%d", &nmax);
-		endl();
-	} while (nmax > 50 || nmax <= 0);
-
+		printf("1- Dane z pliku, 2- Hilbert");
+		scanf("%d", &ktore);
+	} while (ktore != 1 && ktore != 2);
 	int i = 0;
 	int j = 0;
-	FILE* f1 = fopen("blad.txt", "w");
+	switch (ktore)
+	{
+	case(1):
+	{
+
+		do
+		{
+			printf("Podaj max ilosc rownan<=50\n");		//wczytywanie ilosci rownan z klawiatury
+			scanf("%d", &nmax);
+			endl();
+		} while (nmax > 50 || nmax <= 0);
+
+	}
+	case(2):
+	{
+		fscanf(f2, "%d", &nf1);		//wczytywanie ilosci rownan z plikow i ich porownywanie
+		fscanf(f3, "%d", &nf2);
+		if (nf1 != nf2)
+		{
+			printf("bledne dane w plikach!");
+			return 0;
+		}
+		else nmax = nf1;
+	}
+	
+
 	double blad = 0;
 	/*double bst[N];
 	double xst[N];
 	double macierz[N][N];
+	double trojkatna[N][N];
 	*/
 	double* xdyn;
 	double* bdyn;
-	double** hilbert;
+	double** macierzdyn;
+	double** trojkatna;
 
-	hilbert = (double**)(malloc(nmax * sizeof(double*)));			//dynamiczna alokacja macierzy na Hilberta
+	macierzdyn = (double**)(malloc(nmax * sizeof(double*)));			//dynamiczna alokacja macierzy na Hilberta
 	for (i = 0; i < nmax; i++)
 	{
-		hilbert[i] = (double*)(malloc(nmax * sizeof(double)));
+		macierzdyn[i] = (double*)(malloc(nmax * sizeof(double)));
+	}
+
+	trojkatna = (double**)(malloc(nmax * sizeof(double*)));			//dynamiczna alokacja macierzy na Hilberta
+	for (i = 0; i < nmax; i++)
+	{
+		trojkatna[i] = (double*)(malloc(nmax * sizeof(double)));
 	}
 	xdyn = (double*)(malloc(nmax * sizeof(double)));			//dynamiczna tablica na szukane i wyrazy wolne
 	bdyn = (double*)(malloc(nmax * sizeof(double)));
+	for (i = 0; i < n; i++)
+	{
+		fscanf(f3, "%lf", bdyn[i]);
+		for ( j = 0; j < n; j++)
+		{
+			fscanf(f2, "%lf", macierzdyn[i][j]);
+		}
+	}
+
 
 
 	/*HilbertMatrix(n, macierz);						//dla alokacji statycznej
@@ -154,10 +237,13 @@ int main()
 	while (n <= nmax)
 	{
 		
-		HilbertMatrix(n, hilbert);
-		computeVec(n, hilbert, bdyn);
-		gauss(n, hilbert, bdyn, xdyn);
-		displayMatrix(n, hilbert);
+		HilbertMatrix(n, macierzdyn);
+		displayMatrix(n, macierzdyn);
+		computeVec(n, macierzdyn, bdyn);
+		trojk(n, macierzdyn, trojkatna);
+		gauss(n, macierzdyn, bdyn, xdyn);
+
+		displayMatrix(n, trojkatna);
 		plotVec(n, xdyn);
 		blad = maxAbsError(n, xdyn);
 		fprintf(f1, "%d\t%lf\n",n, blad);
@@ -166,12 +252,20 @@ int main()
 	}
 	for (i = 0; i < nmax; i++)
 	{
-		free(hilbert[i]);
+		free(macierzdyn[i]);
 	}
-	free(hilbert);
+	free(macierzdyn);
+	for (i = 0; i < nmax; i++)
+	{
+		free(macierzdyn[i]);
+	}
+	free(macierzdyn);
 	free(xdyn);
 	free(bdyn);
 	fclose(f1);
+	fclose(f3);
+	fclose(f2);
+
 	return 0;
 }
 
