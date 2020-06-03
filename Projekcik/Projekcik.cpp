@@ -57,7 +57,6 @@ void trojk(int n,/* double a[][N],*/double** a,/* double t[][N],*/double** t) //
 		for (k = i + 1; k < n; k++)
 		{
 			wsp = t[k][i] / t[i][i];
-			// odejmowanie elementów wiersza "i" od wiersza "k"
 			for (j = i; j < n; j++)
 			{
 				t[k][j] -= t[i][j] * wsp;
@@ -158,17 +157,16 @@ int main()
 	FILE* f1 = fopen("blad.txt", "w");
 	FILE* f2 = fopen("macierz.txt", "r");
 	FILE* f3 = fopen("wektor.txt", "r");
-	do 
+	do
 	{
-		printf("1- Dane z pliku, 2- Hilbert");
+		printf("1- Hilbert 2- Dane z pliku\n ");
 		scanf("%d", &ktore);
 	} while (ktore != 1 && ktore != 2);
 	int i = 0;
 	int j = 0;
 	switch (ktore)
 	{
-	case(1):
-	{
+	case 1:
 
 		do
 		{
@@ -176,10 +174,9 @@ int main()
 			scanf("%d", &nmax);
 			endl();
 		} while (nmax > 50 || nmax <= 0);
+		break;
+	case 2:
 
-	}
-	case(2):
-	{
 		fscanf(f2, "%d", &nf1);		//wczytywanie ilosci rownan z plikow i ich porownywanie
 		fscanf(f3, "%d", &nf2);
 		if (nf1 != nf2)
@@ -188,8 +185,8 @@ int main()
 			return 0;
 		}
 		else nmax = nf1;
+		break;
 	}
-	
 
 	double blad = 0;
 	/*double bst[N];
@@ -215,51 +212,60 @@ int main()
 	}
 	xdyn = (double*)(malloc(nmax * sizeof(double)));			//dynamiczna tablica na szukane i wyrazy wolne
 	bdyn = (double*)(malloc(nmax * sizeof(double)));
-	for (i = 0; i < n; i++)
+	switch (ktore)
 	{
-		fscanf(f3, "%lf", bdyn[i]);
-		for ( j = 0; j < n; j++)
-		{
-			fscanf(f2, "%lf", macierzdyn[i][j]);
-		}
-	}
 
-
-
-	/*HilbertMatrix(n, macierz);						//dla alokacji statycznej
-	displayMatrix(n, macierz);
-	computeVec(n, macierz, bst);
-	gauss(n, macierz, bst, xst);
-	plotVec(n, xst);
-	blad = maxAbsError(n, xst);
-	*/
-	fprintf(f1, "n\t bladmax\n");
-	while (n <= nmax)
-	{
+		case 1:
 		
-		HilbertMatrix(n, macierzdyn);
-		displayMatrix(n, macierzdyn);
-		computeVec(n, macierzdyn, bdyn);
-		trojk(n, macierzdyn, trojkatna);
-		gauss(n, macierzdyn, bdyn, xdyn);
 
-		displayMatrix(n, trojkatna);
-		plotVec(n, xdyn);
-		blad = maxAbsError(n, xdyn);
-		fprintf(f1, "%d\t%lf\n",n, blad);
-		printf("%d\t%lg\n", n, blad);
-		n++;
+			printf("poszlo 1\n");
+			/*HilbertMatrix(n, macierz);						//dla alokacji statycznej
+			displayMatrix(n, macierz);
+			computeVec(n, macierz, bst);
+			gauss(n, macierz, bst, xst);
+			plotVec(n, xst);
+			blad = maxAbsError(n, xst);
+			*/
+			fprintf(f1, "n\t bladmax\n");
+			while (n <= nmax)
+			{
+
+				HilbertMatrix(n, macierzdyn);
+				displayMatrix(n, macierzdyn);
+				computeVec(n, macierzdyn, bdyn);
+				trojk(n, macierzdyn, trojkatna);
+				gauss(n, macierzdyn, bdyn, xdyn);
+
+				displayMatrix(n, trojkatna);
+				plotVec(n, xdyn);
+				blad = maxAbsError(n, xdyn);
+				fprintf(f1, "%d\t%lf\n", n, blad);
+				printf("%d\t%lg\n", n, blad);
+				n++;
+			}
+			break;
+
+		case 2:
+		
+			printf("poszlo 2\n");
+			for (i = 0; i < nmax; i++)
+			{
+				fscanf(f3, "%lf", &bdyn[i]);
+				for (j = 0; j < nmax; j++)
+				{
+					fscanf(f2, "%lf", &macierzdyn[i][j]);
+				}
+			}
+			displayMatrix(nmax, macierzdyn);
+			break;
+		
 	}
 	for (i = 0; i < nmax; i++)
 	{
 		free(macierzdyn[i]);
 	}
 	free(macierzdyn);
-	for (i = 0; i < nmax; i++)
-	{
-		free(macierzdyn[i]);
-	}
-	free(macierzdyn);
+
 	free(xdyn);
 	free(bdyn);
 	fclose(f1);
