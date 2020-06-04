@@ -215,51 +215,55 @@ int main()
 	switch (ktore)
 	{
 
-		case 1:
-		
-			/*HilbertMatrix(n, macierz);						//dla alokacji statycznej
-			displayMatrix(n, macierz);
-			computeVec(n, macierz, bst);
-			gauss(n, macierz, bst, xst);
-			plotVec(n, xst);
-			blad = maxAbsError(n, xst);
-			*/
-			fprintf(f1, "n\t bladmax\n");
-			while (n <= nmax)
+	case 1:
+
+		/*HilbertMatrix(n, macierz);						//dla alokacji statycznej
+		displayMatrix(n, macierz);
+		computeVec(n, macierz, bst);
+		gauss(n, macierz, bst, xst);
+		plotVec(n, xst);
+		blad = maxAbsError(n, xst);
+		*/
+		fprintf(f1, "n\t bladmax\n");
+		while (n <= nmax)
+		{
+
+			HilbertMatrix(n, macierzdyn);
+			displayMatrix(n, macierzdyn);
+			computeVec(n, macierzdyn, bdyn);
+			trojk(n, macierzdyn, trojkatna);
+			gauss(n, macierzdyn, bdyn, xdyn);
+
+			displayMatrix(n, trojkatna);
+			plotVec(n, xdyn);
+			blad = maxAbsError(n, xdyn);
+			fprintf(f1, "%d\t%lf\n", n, blad);
+			printf("%d\t%lg\n", n, blad);
+			n++;
+		}
+		break;
+
+	case 2:
+
+		for (i = 0; i < nmax; i++)
+		{
+			fscanf(f3, "%lf", &bdyn[i]);
+			for (j = 0; j < nmax; j++)
 			{
-
-				HilbertMatrix(n, macierzdyn);
-				displayMatrix(n, macierzdyn);
-				computeVec(n, macierzdyn, bdyn);
-				trojk(n, macierzdyn, trojkatna);
-				gauss(n, macierzdyn, bdyn, xdyn);
-
-				displayMatrix(n, trojkatna);
-				plotVec(n, xdyn);
-				blad = maxAbsError(n, xdyn);
-				fprintf(f1, "%d\t%lf\n", n, blad);
-				printf("%d\t%lg\n", n, blad);
-				n++;
+				fscanf(f2, "%lf", &macierzdyn[i][j]);
 			}
-			break;
-
-		case 2:
-
-			for (i = 0; i < nmax; i++)
-			{
-				fscanf(f3, "%lf", &bdyn[i]);
-				for (j = 0; j < nmax; j++)
-				{
-					fscanf(f2, "%lf", &macierzdyn[i][j]);
-				}
-			}
-			plotVec(nmax, bdyn);
-			displayMatrix(nmax, macierzdyn);
-			trojk(nmax, macierzdyn, trojkatna);
-			displayMatrix(nmax, trojkatna);
+		}
+		plotVec(nmax, bdyn);
+		displayMatrix(nmax, macierzdyn);
+		trojk(nmax, macierzdyn, trojkatna);
+		endl();
+		displayMatrix(nmax, trojkatna);
+		if (wyznaczniktrojk(n, trojkatna) != 0)
+		{
 			gauss(nmax, macierzdyn, bdyn, xdyn);
 			plotVec(nmax, xdyn);
-
+		}
+		else printf("Wyznacznik macierzy rowny 0! Blędny układ rownan");
 			break;
 		
 	}
