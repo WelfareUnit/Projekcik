@@ -67,7 +67,7 @@ void trojk(int n,/* double a[][N],*/double** a,/* double t[][N],*/double** t) //
 }
 double wyznaczniktrojk(int n,/* double a[][N],*/double** a)
 {
-	double iloczyn = 0;
+	double iloczyn = 1;
 	int i = 0;
 	for (i = 0; i < n; i++)
 	{
@@ -263,7 +263,10 @@ int main()
 			gauss(nmax, macierzdyn, bdyn, xdyn);
 			plotVec(nmax, xdyn);
 		}
-		else printf("Wyznacznik macierzy rowny 0! Blędny uklad rownan");
+		else
+		{
+			printf("Wyznacznik macierzy rowny 0! Blędny uklad rownan");
+		}
 			break;
 		
 	}
