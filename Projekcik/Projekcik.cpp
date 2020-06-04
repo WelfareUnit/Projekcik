@@ -65,7 +65,7 @@ void trojk(int n,/* double a[][N],*/double** a,/* double t[][N],*/double** t) //
 		}
 	}
 }
-double wyznaczniktrojk(int n,/* double a[][N],*/double** a)
+double wyznaczniktrojk(int n,/* double a[][N],*/double** a)		//funkcja licząca wyznacznik macierzy trójkątnej
 {
 	double iloczyn = 1;
 	int i = 0;
@@ -140,7 +140,6 @@ double maxAbsError(int n, double *x)
 	return max;
 }
 
-
 void endl()
 {
 	printf("\n");
@@ -164,7 +163,8 @@ int main()
 	} while (ktore != 1 && ktore != 2);
 	int i = 0;
 	int j = 0;
-	switch (ktore)
+	switch (ktore)							//Program ma dwie funkcje- 1 rozwiązuje układ równań z macierzą Hilberta, 
+											//2- Rozwiązuje układ równań z danych w pliku
 	{
 	case 1:
 
@@ -205,7 +205,7 @@ int main()
 		macierzdyn[i] = (double*)(malloc(nmax * sizeof(double)));
 	}
 
-	trojkatna = (double**)(malloc(nmax * sizeof(double*)));			//dynamiczna alokacja macierzy na Hilberta
+	trojkatna = (double**)(malloc(nmax * sizeof(double*)));			//dynamiczna alokacja macierzy na trójkątną
 	for (i = 0; i < nmax; i++)
 	{
 		trojkatna[i] = (double*)(malloc(nmax * sizeof(double)));
@@ -231,7 +231,7 @@ int main()
 			HilbertMatrix(n, macierzdyn);
 			displayMatrix(n, macierzdyn);
 			computeVec(n, macierzdyn, bdyn);
-			trojk(n, macierzdyn, trojkatna);
+			trojk(n, macierzdyn, trojkatna);					// "Trójkącenie" Macierzy hilberta
 			gauss(n, macierzdyn, bdyn, xdyn);
 
 			displayMatrix(n, trojkatna);
@@ -258,7 +258,7 @@ int main()
 		trojk(nmax, macierzdyn, trojkatna);
 		endl();
 		displayMatrix(nmax, trojkatna);
-		if (wyznaczniktrojk(n, trojkatna) != 0)
+		if (fabs(wyznaczniktrojk(n, trojkatna)) <= 0.00001)			//dla większych układów macierz trójkątna nie jest idealna, więc wyznacznik może nie być dokładnie =0
 		{
 			gauss(nmax, macierzdyn, bdyn, xdyn);
 			plotVec(nmax, xdyn);
