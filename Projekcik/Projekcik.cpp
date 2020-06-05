@@ -285,7 +285,11 @@ int main()
 		free(macierzdyn[i]);
 	}
 	free(macierzdyn);
-
+	for (i = 0; i < nmax; i++)
+	{
+		free(trojkatna[i]);
+	}
+	free(trojkatna);
 	free(xdyn);
 	free(bdyn);
 	fclose(f1);
