@@ -4,11 +4,11 @@
 #include <stdlib.h>
 #define N 50
 #pragma warning(disable:4996)		//umożlliwienie uzywania scanf w Visual 2019
-void gauss(int n,/* double a[][N],*/double**a, double *b, double *x)			//funkcja z biblioteki gauss, przeklejona tutaj w celu modyfikacji dla alok. dyn.
+void gauss(int n,/* float a[][N],*/float**a, float *b, float *x)			//funkcja z biblioteki gauss, przeklejona tutaj w celu modyfikacji dla alok. dyn.
 {
 	int i, j, k;
-	double s;
-	double wsp;
+	float s;
+	float wsp;
 
 	//eliminacja
 
@@ -40,10 +40,10 @@ void gauss(int n,/* double a[][N],*/double**a, double *b, double *x)			//funkcja
 		x[i] = (b[i] - s) / a[i][i];
 	}
 }
-void trojk(int n,/* double a[][N],*/double** a,/* double t[][N],*/double** t) //funkcja obliczająca macierz trójkątną górną z danej macierz
+void trojk(int n,/* float a[][N],*/float** a,/* float t[][N],*/float** t) //funkcja obliczająca macierz trójkątną górną z danej macierz
 {
 	int i, j, k;
-	double wsp=0;
+	float wsp=0;
 	for (i = 0; i < n; i++) //przepisanie elementow macierzy na macierz, na której zapisana będzie trójkątna- pierwotna jest nietknięta
 	{
 		for (j = 0; j < n; j++)
@@ -65,9 +65,9 @@ void trojk(int n,/* double a[][N],*/double** a,/* double t[][N],*/double** t) //
 		}
 	}
 }
-double wyznaczniktrojk(int n,/* double a[][N],*/double** a)		//funkcja licząca wyznacznik macierzy trójkątnej
+float wyznaczniktrojk(int n,/* float a[][N],*/float** a)		//funkcja licząca wyznacznik macierzy trójkątnej
 {
-	double iloczyn = 1;
+	float iloczyn = 1;
 	int i = 0;
 	for (i = 0; i < n; i++)
 	{
@@ -75,7 +75,7 @@ double wyznaczniktrojk(int n,/* double a[][N],*/double** a)		//funkcja licząca 
 	}
 	return iloczyn;
 }
-void HilbertMatrix(int n/*, double H[][N]*/, double** H)		//zakomentowane części są dla tablic alokowanych statycznie, odkomentowane dla dynamicznie
+void HilbertMatrix(int n/*, float H[][N]*/, float** H)		//zakomentowane części są dla tablic alokowanych statycznie, odkomentowane dla dynamicznie
 {
 	int i = 0;
 	int j = 0;
@@ -89,23 +89,23 @@ void HilbertMatrix(int n/*, double H[][N]*/, double** H)		//zakomentowane częś
 	}
 }
 
-void plotVec(int n, double* b)		//wyswietlanie wektora na ekran
+void plotVec(int n, float* b)		//wyswietlanie wektora na ekran
 {
 	for (int i = 0; i < n; i++)
 	{
-		printf("%lg\t", b[i]);
+		printf("%g\t", b[i]);
 	}
 	printf("\n");
 }
 
-void displayMatrix(int n/*, double H[][N]*/, double** H)		//wyswietlanie macierzy
+void displayMatrix(int n/*, float H[][N]*/, float** H)		//wyswietlanie macierzy
 {
 	int i = 0, j = 0;
 	for (i = 0; i < n; i++)
 	{
 		for (j = 0; j < n; j++)
 		{
-			printf("%lf\t", H[i][j]);
+			printf("%f\t", H[i][j]);
 
 		}
 		printf("\n");
@@ -114,7 +114,7 @@ void displayMatrix(int n/*, double H[][N]*/, double** H)		//wyswietlanie macierz
 }
 
 
-void computeVec(int n/*, double H[][N]*/, double** H, double* v)		//obliczanie wektora B w Hilbercie
+void computeVec(int n/*, float H[][N]*/, float** H, float* v)		//obliczanie wektora B w Hilbercie
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -125,10 +125,10 @@ void computeVec(int n/*, double H[][N]*/, double** H, double* v)		//obliczanie w
 		}
 	}
 }
-double maxAbsError(int n, double *x)			//funkcja liczaca maksymalne bezwzgl. odejście od wyniku w Hilbercie( Gdzie powinno wyjść 1)
+float maxAbsError(int n, float *x)			//funkcja liczaca maksymalne bezwzgl. odejście od wyniku w Hilbercie( Gdzie powinno wyjść 1)
 {
-	double max = 0;
-	double error = 0;
+	float max = 0;
+	float error = 0;
 	for (int i = 0; i < n; i++)
 	{
 		error = fabs(1 - x[i]);
@@ -153,7 +153,7 @@ int main()
 	int nf2;
 	int nmax = 0;
 	int wyznacznik = 0;
-	FILE* f1 = fopen("blad.txt", "w");
+	FILE* f1 = fopen("bladfloat.txt", "w");
 	FILE* f2 = fopen("macierz.txt", "r");
 	FILE* f3 = fopen("wektor.txt", "r");
 	do
@@ -188,30 +188,30 @@ int main()
 		break;
 	}
 
-	double blad = 0;
-	/*double bst[N];
-	double xst[N];
-	double macierz[N][N];
-	double trojkatna[N][N];
+	float blad = 0;
+	/*float bst[N];
+	float xst[N];
+	float macierz[N][N];
+	float trojkatna[N][N];
 	*/
-	double* xdyn;
-	double* bdyn;
-	double** macierzdyn;
-	double** trojkatna;
+	float* xdyn;
+	float* bdyn;
+	float** macierzdyn;
+	float** trojkatna;
 
-	macierzdyn = (double**)(malloc(nmax * sizeof(double*)));			//dynamiczna alokacja macierzy na Hilberta
+	macierzdyn = (float**)(malloc(nmax * sizeof(float*)));			//dynamiczna alokacja macierzy na Hilberta
 	for (i = 0; i < nmax; i++)
 	{
-		macierzdyn[i] = (double*)(malloc(nmax * sizeof(double)));
+		macierzdyn[i] = (float*)(malloc(nmax * sizeof(float)));
 	}
 
-	trojkatna = (double**)(malloc(nmax * sizeof(double*)));			//dynamiczna alokacja macierzy na trójkątną
+	trojkatna = (float**)(malloc(nmax * sizeof(float*)));			//dynamiczna alokacja macierzy na trójkątną
 	for (i = 0; i < nmax; i++)
 	{
-		trojkatna[i] = (double*)(malloc(nmax * sizeof(double)));
+		trojkatna[i] = (float*)(malloc(nmax * sizeof(float)));
 	}
-	xdyn = (double*)(malloc(nmax * sizeof(double)));			//dynamiczna tablica na szukane i wyrazy wolne
-	bdyn = (double*)(malloc(nmax * sizeof(double)));
+	xdyn = (float*)(malloc(nmax * sizeof(float)));			//dynamiczna tablica na szukane i wyrazy wolne
+	bdyn = (float*)(malloc(nmax * sizeof(float)));
 	switch (ktore)
 	{
 
@@ -237,8 +237,8 @@ int main()
 			displayMatrix(n, trojkatna);
 			plotVec(n, xdyn);
 			blad = maxAbsError(n, xdyn);
-			fprintf(f1, "%d\t%lg\n", n, blad);
-			printf("%d\t%lg\n", n, blad);
+			fprintf(f1, "%d\t%g\n", n, blad);
+			printf("%d\t%g\n", n, blad);
 			n++;
 		}
 		break;
@@ -247,10 +247,10 @@ int main()
 
 		for (i = 0; i < nmax; i++)
 		{
-			fscanf(f3, "%lf", &bdyn[i]);			//pobieranie wektora z pliku
+			fscanf(f3, "%f", &bdyn[i]);			//pobieranie wektora z pliku
 			for (j = 0; j < nmax; j++)
 			{
-				fscanf(f2, "%lf", &macierzdyn[i][j]);			//pobieranie macierzy z pliku
+				fscanf(f2, "%f", &macierzdyn[i][j]);			//pobieranie macierzy z pliku
 			}
 		}
 		plotVec(nmax, bdyn);
