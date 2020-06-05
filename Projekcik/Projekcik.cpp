@@ -44,7 +44,7 @@ void trojk(int n,/* double a[][N],*/double** a,/* double t[][N],*/double** t) //
 {
 	int i, j, k;
 	double wsp=0;
-	for (i = 0; i < n; i++) //przepisanie elementow macierzy na macierz, na której zapisana będzie trójkątna
+	for (i = 0; i < n; i++) //przepisanie elementow macierzy na macierz, na której zapisana będzie trójkątna- pierwotna jest nietknięta
 	{
 		for (j = 0; j < n; j++)
 		{
@@ -89,7 +89,7 @@ void HilbertMatrix(int n/*, double H[][N]*/, double** H)		//zakomentowane częś
 	}
 }
 
-void plotVec(int n, double* b)
+void plotVec(int n, double* b)		//wyswietlanie wektora na ekran
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -98,7 +98,7 @@ void plotVec(int n, double* b)
 	printf("\n");
 }
 
-void displayMatrix(int n/*, double H[][N]*/, double** H)
+void displayMatrix(int n/*, double H[][N]*/, double** H)		//wyswietlanie macierzy
 {
 	int i = 0, j = 0;
 	for (i = 0; i < n; i++)
@@ -114,7 +114,7 @@ void displayMatrix(int n/*, double H[][N]*/, double** H)
 }
 
 
-void computeVec(int n/*, double H[][N]*/, double** H, double* v)
+void computeVec(int n/*, double H[][N]*/, double** H, double* v)		//obliczanie wektora B w Hilbercie
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -140,7 +140,7 @@ double maxAbsError(int n, double *x)			//funkcja liczaca maksymalne bezwzgl. ode
 	return max;
 }
 
-void endl()
+void endl()						//kiedy nie chce mi sie pisac printf("\n")
 {
 	printf("\n");
 }
@@ -157,7 +157,7 @@ int main()
 	FILE* f2 = fopen("macierz.txt", "r");
 	FILE* f3 = fopen("wektor.txt", "r");
 	do
-	{
+	{	
 		printf("1- Hilbert 2- Dane z pliku\n ");
 		scanf("%d", &ktore);
 	} while (ktore != 1 && ktore != 2);
@@ -177,8 +177,8 @@ int main()
 		break;
 	case 2:
 
-		fscanf(f2, "%d", &nf1);		//wczytywanie ilosci rownan z plikow i ich porownywanie
-		fscanf(f3, "%d", &nf2);
+		fscanf(f2, "%d", &nf1);		//wczytywanie ilosci rownan z plikow i ich porownywanie-
+		fscanf(f3, "%d", &nf2);		//na poczatku pliku napisane jest, dla ilu rownan są te zapisane w nim dane
 		if (nf1 != nf2)
 		{
 			printf("bledne dane w plikach!");
@@ -247,10 +247,10 @@ int main()
 
 		for (i = 0; i < nmax; i++)
 		{
-			fscanf(f3, "%lf", &bdyn[i]);
+			fscanf(f3, "%lf", &bdyn[i]);			//pobieranie wektora z pliku
 			for (j = 0; j < nmax; j++)
 			{
-				fscanf(f2, "%lf", &macierzdyn[i][j]);
+				fscanf(f2, "%lf", &macierzdyn[i][j]);			//pobieranie macierzy z pliku
 			}
 		}
 		plotVec(nmax, bdyn);
@@ -258,14 +258,14 @@ int main()
 		trojk(nmax, macierzdyn, trojkatna);
 		endl();
 		displayMatrix(nmax, trojkatna);
-		if (fabs(wyznaczniktrojk(n, trojkatna)) <= 0.00001)			//dla większych układów macierz trójkątna nie jest idealna, więc wyznacznik może nie być dokładnie =0
+		if (fabs(wyznaczniktrojk(n, trojkatna)) <= 0.00001)			//dla większych układów macierz trójkątna nie jest idealna, więc wyznacznik może nie być dokładnie =0 dla błędnej
 		{
 			gauss(nmax, macierzdyn, bdyn, xdyn);
 			plotVec(nmax, xdyn);
 		}
 		else
 		{
-			printf("Wyznacznik macierzy rowny 0! Blędny uklad rownan");
+			printf("Wyznacznik macierzy rowny 0! Sprzeczny uklad rownan");
 		}
 			break;
 		
