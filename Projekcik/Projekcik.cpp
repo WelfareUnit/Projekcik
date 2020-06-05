@@ -258,16 +258,18 @@ int main()
 		trojk(nmax, macierzdyn, trojkatna);
 		endl();
 		displayMatrix(nmax, trojkatna);
-		if (fabs(wyznaczniktrojk(n, trojkatna)) <= 0.00001)			//dla większych układów macierz trójkątna nie jest idealna, więc wyznacznik może nie być dokładnie =0 dla błędnej
+		if (fabs(wyznaczniktrojk(n, trojkatna)) >= 0.00001)			//dla większych układów macierz trójkątna nie jest idealna, więc wyznacznik może nie być dokładnie =0 dla błędnej
 		{
 			gauss(nmax, macierzdyn, bdyn, xdyn);
 			plotVec(nmax, xdyn);
+			break;
 		}
 		else
 		{
 			printf("Wyznacznik macierzy rowny 0! Sprzeczny uklad rownan");
-		}
 			break;
+		}
+			
 		
 	}
 	for (i = 0; i < nmax; i++)
