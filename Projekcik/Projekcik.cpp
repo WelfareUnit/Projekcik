@@ -233,12 +233,13 @@ int main()
 			computeVec(n, macierzdyn, bdyn);
 			trojk(n, macierzdyn, trojkatna);					// "Trójkącenie" macierzy Hilberta
 			gauss(n, macierzdyn, bdyn, xdyn);
-
+				printf("Macierz U:\n");
 			displayMatrix(n, trojkatna);
+			printf("Wyniki:\n");
 			plotVec(n, xdyn);
 			blad = maxAbsError(n, xdyn);
 			fprintf(f1, "%d\t%lg\n", n, blad);
-			printf("%d\t%lg\n", n, blad);
+			printf("Liczba rownan:%d\tBlad:%lg\n", n, blad);
 			n++;
 		}
 		break;
@@ -253,19 +254,23 @@ int main()
 				fscanf(f2, "%lf", &macierzdyn[i][j]);			//pobieranie macierzy z pliku
 			}
 		}
+		printf("Zaladowane dane:\n\nWektor b i macierz A\n");
 		plotVec(nmax, bdyn);
 		displayMatrix(nmax, macierzdyn);
+		printf("Macierz U:\n");
 		trojk(nmax, macierzdyn, trojkatna);
 		endl();
 		displayMatrix(nmax, trojkatna);
 		if (fabs(wyznaczniktrojk(n, trojkatna)) >= 0.00001)			//dla większych układów macierz trójkątna nie jest idealna, więc wyznacznik może nie być dokładnie =0 dla błędnej
 		{
+			printf("Wyniki:\n");
 			gauss(nmax, macierzdyn, bdyn, xdyn);
 			plotVec(nmax, xdyn);
 			break;
 		}
 		else
 		{
+
 			printf("Wyznacznik macierzy rowny 0! Sprzeczny uklad rownan");
 			break;
 		}
