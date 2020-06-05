@@ -71,7 +71,7 @@ double wyznaczniktrojk(int n,/* double a[][N],*/double** a)		//funkcja licząca 
 	int i = 0;
 	for (i = 0; i < n; i++)
 	{
-		iloczyn *= a[i][i];
+		iloczyn *= a[i][i];			//mnożymy po porstu wszystkie elementy po przekątnej
 	}
 	return iloczyn;
 }
@@ -125,7 +125,7 @@ void computeVec(int n/*, double H[][N]*/, double** H, double* v)
 		}
 	}
 }
-double maxAbsError(int n, double *x)
+double maxAbsError(int n, double *x)			//funkcja liczaca maksymalne bezwzgl. odejście od wyniku w Hilbercie( Gdzie powinno wyjść 1)
 {
 	double max = 0;
 	double error = 0;
@@ -231,7 +231,7 @@ int main()
 			HilbertMatrix(n, macierzdyn);
 			displayMatrix(n, macierzdyn);
 			computeVec(n, macierzdyn, bdyn);
-			trojk(n, macierzdyn, trojkatna);					// "Trójkącenie" Macierzy hilberta
+			trojk(n, macierzdyn, trojkatna);					// "Trójkącenie" macierzy Hilberta
 			gauss(n, macierzdyn, bdyn, xdyn);
 
 			displayMatrix(n, trojkatna);
