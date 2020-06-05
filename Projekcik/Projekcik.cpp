@@ -237,7 +237,7 @@ int main()
 			displayMatrix(n, trojkatna);
 			plotVec(n, xdyn);
 			blad = maxAbsError(n, xdyn);
-			fprintf(f1, "%d\t%lf\n", n, blad);
+			fprintf(f1, "%d\t%lg\n", n, blad);
 			printf("%d\t%lg\n", n, blad);
 			n++;
 		}
