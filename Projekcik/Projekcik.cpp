@@ -131,7 +131,7 @@ float maxAbsError(int n, float *x)			//funkcja liczaca maksymalne bezwzgl. odej�
 	float error = 0;
 	for (int i = 0; i < n; i++)
 	{
-		error = fabs(1 - x[i]);
+		error = fabsf(1 - x[i]);
 		if (max < error)
 		{
 			max = error;
@@ -258,7 +258,7 @@ int main()
 		trojk(nmax, macierzdyn, trojkatna);
 		endl();
 		displayMatrix(nmax, trojkatna);
-		if (fabs(wyznaczniktrojk(n, trojkatna)) <= 0.00001)			//dla większych układów macierz trójkątna nie jest idealna, więc wyznacznik może nie być dokładnie =0 dla błędnej
+		if (fabsf(wyznaczniktrojk(n, trojkatna)) <= 0.00001)			//dla większych układów macierz trójkątna nie jest idealna, więc wyznacznik może nie być dokładnie =0 dla błędnej
 		{
 			gauss(nmax, macierzdyn, bdyn, xdyn);
 			plotVec(nmax, xdyn);
