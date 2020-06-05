@@ -258,7 +258,7 @@ int main()
 		trojk(nmax, macierzdyn, trojkatna);
 		endl();
 		displayMatrix(nmax, trojkatna);
-		if (fabsf(wyznaczniktrojk(n, trojkatna)) <= 0.00001)			//dla większych układów macierz trójkątna nie jest idealna, więc wyznacznik może nie być dokładnie =0 dla błędnej
+		if (fabsf(wyznaczniktrojk(n, trojkatna)) >= 0.00001)			//dla większych układów macierz trójkątna nie jest idealna, więc wyznacznik może nie być dokładnie =0 dla błędnej
 		{
 			gauss(nmax, macierzdyn, bdyn, xdyn);
 			plotVec(nmax, xdyn);
