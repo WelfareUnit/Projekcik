@@ -229,6 +229,7 @@ int main()
 		{
 
 			HilbertMatrix(n, macierzdyn);
+
 			displayMatrix(n, macierzdyn);
 			computeVec(n, macierzdyn, bdyn);
 			trojk(n, macierzdyn, trojkatna);					// "Trójkącenie" macierzy Hilberta
@@ -265,7 +266,9 @@ int main()
 		{
 			printf("Wyniki:\n");
 			gauss(nmax, macierzdyn, bdyn, xdyn);
+
 			plotVec(nmax, xdyn);
+			endl();
 			break;
 		}
 		else
